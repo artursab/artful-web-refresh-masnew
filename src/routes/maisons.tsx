@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import { lazy, Suspense } from "react";
 import { useT } from "@/lib/i18n";
-import { CataloguePages } from "@/components/CataloguePages";
+
+const CatalogueFlipbook = lazy(() => import("@/components/CatalogueFlipbook"));
 
 export const Route = createFileRoute("/maisons")({
   head: () => ({
@@ -34,7 +36,13 @@ function Models() {
           <p className="text-lg text-charcoal/70 leading-relaxed">{t("models.lead")}</p>
         </header>
 
-        <CataloguePages />
+        <Suspense
+          fallback={
+            <div className="mx-auto max-w-5xl aspect-[1/1.414] md:aspect-[1.414/1] w-full rounded-lg bg-stone-100 ring-1 ring-charcoal/10 animate-pulse" />
+          }
+        >
+          <CatalogueFlipbook />
+        </Suspense>
 
         <div className="mt-14 md:mt-20 flex justify-center">
           <Link
