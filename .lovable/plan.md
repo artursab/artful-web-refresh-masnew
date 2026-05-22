@@ -1,3 +1,16 @@
+
+## Local
+
+bun install
+bun run dev
+
+or 
+
+npm install
+npm run dev
+
+
+
 ## Good news — no recreation needed
 
 I checked the code. The site has **no real backend**:

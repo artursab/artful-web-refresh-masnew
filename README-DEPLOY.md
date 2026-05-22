@@ -2,6 +2,39 @@
 
 Le projet est une SPA statique (pas de backend). Le même dossier `dist/` fonctionne sur GitHub Pages **et** sur OVH mutualisé.
 
+## Lancer en local
+
+Prérequis : Bun ≥ 1.1 (recommandé) **ou** Node ≥ 20 + npm.
+
+### Avec Bun
+
+```bash
+bun install
+bun run dev          # http://localhost:8080
+```
+
+### Avec npm
+
+```bash
+npm install
+npm run dev
+```
+
+### Tester le build statique (identique à GitHub Pages / OVH)
+
+```bash
+# Build « racine » (comme OVH domaine principal ou custom domain GitHub) :
+PAGES_BASE=/ bunx vite build --config vite.config.pages.ts
+bunx serve dist                       # http://localhost:3000
+
+# Build sous-dossier (comme GitHub Pages /dorfart/) :
+PAGES_BASE=/dorfart/ bunx vite build --config vite.config.pages.ts
+bunx serve dist                       # ouvrir http://localhost:3000/dorfart/
+```
+
+Avec npm, remplacer `bunx` par `npx`.
+
+
 ## GitHub Pages (automatique)
 
 1. Pousser le projet complet sur `artursab/dorfart`.

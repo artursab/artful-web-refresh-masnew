@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 // Set via env so we can flip between subpath ("/<repo>/") and root ("/") for custom domains.
-const base = process.env.PAGES_BASE ?? "/JulienLading-main/";
+const base = process.env.PAGES_BASE ?? "/dorfart/";
 
 export default defineConfig({
   base,
