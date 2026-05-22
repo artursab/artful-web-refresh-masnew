@@ -75,7 +75,7 @@ const PAGES: { src: string; alt: string }[] = [
 
 export function CataloguePages() {
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-6 md:gap-10">
+    <div className="mx-auto max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 px-6">
       {PAGES.map((p, i) => (
         <figure
           key={i}
