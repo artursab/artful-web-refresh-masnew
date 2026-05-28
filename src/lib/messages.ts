@@ -9,8 +9,7 @@ const fr = {
 
   "home.eyebrow": "Constructeur de maisons ossature bois — depuis 1994",
   "home.title": "L'art de vivre en symbiose.",
-  "home.lead":
-    "Conception et fabrication de maisons en ossature bois haute performance. Une architecture durable qui respire, pensée pour durer des générations.",
+  "home.lead": "Maisons en ossature bois sur-mesure. Conçues pour durer des générations.",
   "home.cta.models": "Découvrir les modèles",
   "home.cta.configure": "Lancer le configurateur",
 
@@ -117,9 +116,8 @@ const en: Record<keyof typeof fr, string> = {
   "nav.configurator": "Configurator",
 
   "home.eyebrow": "Timber-frame house builder — since 1994",
-  "home.title": "The art of living in symbiosis.",
-  "home.lead":
-    "Design and manufacture of high-performance timber-frame houses. Sustainable architecture that breathes, built to last for generations.",
+  "home.title": "The art of living in harmony.",
+  "home.lead": "Custom timber-frame homes. Built to outlive generations.",
   "home.cta.models": "Explore models",
   "home.cta.configure": "Open the configurator",
 
