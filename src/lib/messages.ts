@@ -9,7 +9,8 @@ const fr = {
 
   "home.eyebrow": "Constructeur de maisons ossature bois — depuis 1994",
   "home.title": "L'art de vivre en symbiose.",
-  "home.lead": "Maisons en ossature bois sur-mesure. Conçues pour durer des générations.",
+  "home.lead":
+    "Maisons en ossature bois sur-mesure. Conçues pour durer des générations.",
   "home.cta.models": "Découvrir les modèles",
   "home.cta.configure": "Lancer le configurateur",
 
@@ -105,7 +106,7 @@ const fr = {
   "footer.tagline": "Conception et construction de maisons ossature bois en France.",
   "footer.nav": "Navigation",
   "footer.contact": "Contact",
-  "footer.legal": "© 2026 Dorf SIA. Tous droits réservés.",
+  "footer.legal": "© 2026 Envibois. Tous droits réservés.",
 } as const;
 
 const en: Record<keyof typeof fr, string> = {
@@ -117,7 +118,8 @@ const en: Record<keyof typeof fr, string> = {
 
   "home.eyebrow": "Timber-frame house builder — since 1994",
   "home.title": "The art of living in harmony.",
-  "home.lead": "Custom timber-frame homes. Built to outlive generations.",
+  "home.lead":
+    "Custom timber-frame homes. Built to outlive generations.",
   "home.cta.models": "Explore models",
   "home.cta.configure": "Open the configurator",
 
@@ -213,7 +215,7 @@ const en: Record<keyof typeof fr, string> = {
   "footer.tagline": "Design and construction of timber-frame houses in France.",
   "footer.nav": "Navigation",
   "footer.contact": "Contact",
-  "footer.legal": "© 2026 Dorf SIA. All rights reserved.",
+  "footer.legal": "© 2026 Envibois. All rights reserved.",
 };
 
 export type MessageKey = keyof typeof fr;

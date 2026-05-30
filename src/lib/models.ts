@@ -1,11 +1,11 @@
-import atelier from "@/assets/model-atelier.jpg";
-import sequoia from "@/assets/model-sequoia.jpg";
-import horizon from "@/assets/model-horizon.jpg";
-import alpin from "@/assets/model-alpin.jpg";
-const atelierPine = atelier, atelierLarch = atelier, atelierCharred = atelier, atelierMixed = atelier;
-const sequoiaPine = sequoia, sequoiaLarch = sequoia, sequoiaCharred = sequoia, sequoiaMixed = sequoia;
-const horizonPine = horizon, horizonLarch = horizon, horizonCharred = horizon, horizonMixed = horizon;
-const alpinPine = alpin, alpinLarch = alpin, alpinCharred = alpin, alpinMixed = alpin;
+import atlanticaWood from "@/assets/gamme-atlantica.jpg";
+import traditionnelle from "@/assets/gamme-traditionanelle.jpg";
+import neoWood from "@/assets/gamme-neo-wood.jpg";
+import cubique from "@/assets/gamme-cubique.jpg";
+import classicWood from "@/assets/gamme-classic-wood.jpg";
+import tropicale from "@/assets/gamme-tropicale.jpg";
+
+const imgFor = (i: string) => ({ pine: i, larch: i, charred: i, mixed: i });
 
 export type Model = {
   slug: string;
@@ -21,80 +21,88 @@ export type Model = {
 
 export const MODELS: Model[] = [
   {
-    slug: "atelier",
-    name: "L'Atelier",
-    tagline: { fr: "Studio compact, plain-pied", en: "Compact single-story studio" },
+    slug: "traditionnelle",
+    name: "Gamme Traditionnelle",
+    tagline: { fr: "L'élégance intemporelle du bois", en: "The timeless elegance of wood" },
     description: {
-      fr: "Idéal pour studio, bureau ou retraite d'artiste. Volumes essentiels, lumière naturelle.",
-      en: "Ideal for a studio, home office or artist's retreat. Essential volumes, natural light.",
+      fr: "Maisons en ossature bois inspirées de l'architecture classique française : toitures à deux pans, volumes rassurants et finitions soignées.",
+      en: "Timber-frame homes inspired by classic French architecture: pitched roofs, reassuring volumes and refined finishes.",
     },
-    basePrice: 95000,
-    baseSurface: 45,
-    defaultBedrooms: 1,
-    image: atelier,
-    claddingImages: {
-      pine: atelierPine,
-      larch: atelierLarch,
-      charred: atelierCharred,
-      mixed: atelierMixed,
-    },
-  },
-  {
-    slug: "sequoia",
-    name: "Séquoia",
-    tagline: { fr: "Maison familiale R+1", en: "Two-story family home" },
-    description: {
-      fr: "Maison familiale lumineuse et ouverte, pensée pour la vie en famille.",
-      en: "A bright, open family home designed around modern family life.",
-    },
-    basePrice: 245000,
-    baseSurface: 120,
+    basePrice: 185000,
+    baseSurface: 100,
     defaultBedrooms: 3,
-    image: sequoia,
-    claddingImages: {
-      pine: sequoiaPine,
-      larch: sequoiaLarch,
-      charred: sequoiaCharred,
-      mixed: sequoiaMixed,
-    },
+    image: traditionnelle,
+    claddingImages: imgFor(traditionnelle),
   },
   {
-    slug: "horizon",
-    name: "Horizon",
-    tagline: { fr: "Plain-pied panoramique", en: "Panoramic single-story" },
+    slug: "neo-wood",
+    name: "Gamme Neo Wood",
+    tagline: { fr: "Le bois revisité, signature contemporaine", en: "Wood reimagined, contemporary signature" },
     description: {
-      fr: "Design plain-pied avec baies panoramiques pour s'ouvrir sur le paysage.",
-      en: "Single-story design with panoramic bays opening to the landscape.",
+      fr: "Lignes franches, bardages mixtes et grandes ouvertures. Une nouvelle écriture du bois pour les modes de vie d'aujourd'hui.",
+      en: "Sharp lines, mixed cladding and generous openings. A new wood vocabulary for today's lifestyles.",
     },
-    basePrice: 215000,
+    basePrice: 235000,
+    baseSurface: 115,
+    defaultBedrooms: 3,
+    image: neoWood,
+    claddingImages: imgFor(neoWood),
+  },
+  {
+    slug: "classic-wood",
+    name: "Gamme Classic Wood",
+    tagline: { fr: "L'essence même de la maison bois", en: "The essence of the wooden home" },
+    description: {
+      fr: "Bardage bois plein, charpente apparente, proportions équilibrées. La maison bois dans toute sa pureté.",
+      en: "Full timber cladding, exposed framework, balanced proportions. The wood home in its purest expression.",
+    },
+    basePrice: 175000,
     baseSurface: 95,
     defaultBedrooms: 2,
-    image: horizon,
-    claddingImages: {
-      pine: horizonPine,
-      larch: horizonLarch,
-      charred: horizonCharred,
-      mixed: horizonMixed,
-    },
+    image: classicWood,
+    claddingImages: imgFor(classicWood),
   },
   {
-    slug: "alpin",
-    name: "L'Alpin",
-    tagline: { fr: "Chalet contemporain", en: "Contemporary chalet" },
+    slug: "tropicale",
+    name: "Gamme Tropicale",
+    tagline: { fr: "Pensée pour les climats chauds", en: "Designed for warm climates" },
     description: {
-      fr: "Chalet contemporain pour la montagne, charpente apparente et grandes baies.",
-      en: "Contemporary mountain chalet, exposed framework and large glazed openings.",
+      fr: "Toitures débordantes, ventilation naturelle, bois traités classe 4. Conçue pour les outre-mer et zones tropicales.",
+      en: "Overhanging roofs, natural ventilation, class-4 treated timber. Built for tropical and overseas climates.",
     },
-    basePrice: 285000,
-    baseSurface: 110,
+    basePrice: 165000,
+    baseSurface: 85,
+    defaultBedrooms: 2,
+    image: tropicale,
+    claddingImages: imgFor(tropicale),
+  },
+  {
+    slug: "atlantica",
+    name: "Gamme Atlantica",
+    tagline: { fr: "L'esprit océan, robustesse côtière", en: "Ocean spirit, coastal resilience" },
+    description: {
+      fr: "Inspirée des maisons du littoral atlantique : bardage clair, volumes ouverts sur l'horizon, résistance aux embruns.",
+      en: "Inspired by Atlantic coastal homes: light cladding, volumes opened to the horizon, sea-spray resistance.",
+    },
+    basePrice: 215000,
+    baseSurface: 105,
     defaultBedrooms: 3,
-    image: alpin,
-    claddingImages: {
-      pine: alpinPine,
-      larch: alpinLarch,
-      charred: alpinCharred,
-      mixed: alpinMixed,
+    image: atlanticaWood,
+    claddingImages: imgFor(atlanticaWood),
+  },
+  {
+    slug: "cubique",
+    name: "Gamme Cubique",
+    tagline: { fr: "Architecture radicale, lignes pures", en: "Radical architecture, pure lines" },
+    description: {
+      fr: "Volumes cubiques, toits plats, grandes baies vitrées. Une signature résolument moderne pour amateurs d'épure.",
+      en: "Cubic volumes, flat roofs, large bay windows. A resolutely modern signature for lovers of minimalism.",
     },
+    basePrice: 265000,
+    baseSurface: 120,
+    defaultBedrooms: 3,
+    image: cubique,
+    claddingImages: imgFor(cubique),
   },
 ];
 

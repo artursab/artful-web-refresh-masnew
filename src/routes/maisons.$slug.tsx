@@ -14,12 +14,12 @@ export const Route = createFileRoute("/maisons/$slug")({
     const m = loaderData?.model;
     return {
       meta: [
-        { title: m ? `${m.name} — Dorf SIA` : "Modèle — Dorf SIA" },
+        { title: m ? `${m.name} — Envibois` : "Modèle — Envibois" },
         {
           name: "description",
-          content: m?.description.fr ?? "Modèle de maison ossature bois Dorf SIA.",
+          content: m?.description.fr ?? "Modèle de maison ossature bois Envibois.",
         },
-        { property: "og:title", content: m ? `${m.name} — Dorf SIA` : "Modèle — Dorf SIA" },
+        { property: "og:title", content: m ? `${m.name} — Envibois` : "Modèle — Envibois" },
         { property: "og:description", content: m?.description.fr ?? "" },
         { property: "og:type", content: "product" },
         { property: "og:image", content: m?.image ?? "" },
@@ -45,8 +45,8 @@ export const Route = createFileRoute("/maisons/$slug")({
   notFoundComponent: () => (
     <div className="py-24 text-center">
       <p className="text-charcoal/60">Modèle introuvable.</p>
-      <Link to="/maisons" className="mt-6 inline-block text-oak underline">
-        Retour aux modèles
+      <Link to="/catalogue" className="mt-6 inline-block text-oak underline">
+        Retour au catalogue
       </Link>
     </div>
   ),
@@ -64,7 +64,7 @@ function ModelDetail() {
     <div className="py-16">
       <div className="max-w-screen-xl mx-auto px-6">
         <Link
-          to="/maisons"
+          to="/catalogue"
           className="inline-flex items-center gap-2 text-sm text-charcoal/60 hover:text-oak transition-colors mb-10"
         >
           <ArrowLeft size={14} /> {t("models.back")}

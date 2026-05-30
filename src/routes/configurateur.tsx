@@ -10,6 +10,8 @@ import {
   type Option,
 } from "@/lib/models";
 import { formatPrice, useConfigurator } from "@/lib/configurator-store";
+import { CommercialProcess } from "@/components/CommercialProcess";
+import { PriceDisclaimer } from "@/components/PriceDisclaimer";
 
 type Search = {
   m?: string; s?: number; f?: number; b?: number; g?: number; t?: number;
@@ -20,13 +22,13 @@ export const Route = createFileRoute("/configurateur")({
   validateSearch: (s: Record<string, unknown>): Search => s as Search,
   head: () => ({
     meta: [
-      { title: "Configurateur — Dorf SIA" },
+      { title: "Configurateur — Envibois" },
       {
         name: "description",
         content:
-          "Configurez votre maison ossature bois Dorf SIA en ligne : modèle, surface, finitions extérieures et intérieures, estimation immédiate.",
+          "Configurez votre maison ossature bois Envibois en ligne : modèle, surface, finitions extérieures et intérieures, estimation immédiate.",
       },
-      { property: "og:title", content: "Configurateur — Dorf SIA" },
+      { property: "og:title", content: "Configurateur — Envibois" },
       { property: "og:description", content: "Composez votre maison et obtenez une estimation immédiate." },
       { property: "og:url", content: "/configurateur" },
     ],
@@ -246,25 +248,43 @@ function Configurator() {
               <div className="font-serif text-4xl">{formatPrice(total, locale)}</div>
             </div>
 
-            <button
-              onClick={() => setQuoteOpen(true)}
+            <Link
+              to="/contact"
+              search={{
+                model: state.modelSlug,
+                surface: state.surface,
+                config: state.toQueryString(),
+                estimate: total,
+              }}
               className="w-full bg-charcoal text-cream flex items-center justify-between pl-5 pr-2 py-2.5 rounded-full text-sm font-medium hover:bg-moss transition-colors"
             >
               <span>{t("config.quote")}</span>
               <span className="size-7 flex items-center justify-center bg-cream/15 rounded-full">
                 <ArrowUpRight size={14} />
               </span>
+            </Link>
+
+            <button
+              onClick={() => setQuoteOpen(true)}
+              className="mt-3 w-full border border-charcoal/15 text-charcoal/70 py-2 rounded-full text-xs font-medium hover:border-charcoal/40 hover:text-charcoal transition-colors"
+            >
+              {locale === "fr" ? "Envoi rapide par email" : "Quick email send"}
             </button>
 
-            <p className="mt-5 text-[10px] text-charcoal/50 leading-relaxed">
-              {t("config.disclaimer")}
-            </p>
+            <div className="mt-5">
+              <PriceDisclaimer variant="compact" />
+            </div>
 
-            <Link to="/maisons" className="mt-6 block text-xs text-charcoal/50 hover:text-oak transition-colors text-center">
+            <Link to="/catalogue" className="mt-6 block text-xs text-charcoal/50 hover:text-oak transition-colors text-center">
               ← {t("models.back")}
             </Link>
           </aside>
         </div>
+      </div>
+
+      {/* Process section near configurator */}
+      <div className="bg-bone text-charcoal">
+        <CommercialProcess variant="compact" showCta={false} showDisclaimer={false} />
       </div>
 
       <QuoteDialog open={quoteOpen} onClose={() => setQuoteOpen(false)} total={total} />
@@ -387,8 +407,8 @@ function QuoteDialog({ open, onClose, total }: { open: boolean; onClose: () => v
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
-          subject: `[Dorf SIA] Nouvelle demande de devis — ${parsed.data.name}`,
-          from_name: "Dorf SIA Configurateur",
+          subject: `[Envibois] Nouvelle demande de devis — ${parsed.data.name}`,
+          from_name: "Envibois Configurateur",
           name: parsed.data.name,
           email: parsed.data.email,
           phone: parsed.data.phone,

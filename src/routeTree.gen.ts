@@ -9,17 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SavoirFaireRouteImport } from './routes/savoir-faire'
+import { Route as RgpdRouteImport } from './routes/rgpd'
 import { Route as RealisationsRouteImport } from './routes/realisations'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as MaisonsRouteImport } from './routes/maisons'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ConfigurateurRouteImport } from './routes/configurateur'
+import { Route as CgvRouteImport } from './routes/cgv'
+import { Route as CatalogueRouteImport } from './routes/catalogue'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MaisonsSlugRouteImport } from './routes/maisons.$slug'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavoirFaireRoute = SavoirFaireRouteImport.update({
   id: '/savoir-faire',
   path: '/savoir-faire',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RgpdRoute = RgpdRouteImport.update({
+  id: '/rgpd',
+  path: '/rgpd',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RealisationsRoute = RealisationsRouteImport.update({
@@ -27,9 +43,19 @@ const RealisationsRoute = RealisationsRouteImport.update({
   path: '/realisations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MaisonsRoute = MaisonsRouteImport.update({
   id: '/maisons',
   path: '/maisons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -40,6 +66,16 @@ const ContactRoute = ContactRouteImport.update({
 const ConfigurateurRoute = ConfigurateurRouteImport.update({
   id: '/configurateur',
   path: '/configurateur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CgvRoute = CgvRouteImport.update({
+  id: '/cgv',
+  path: '/cgv',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogueRoute = CatalogueRouteImport.update({
+  id: '/catalogue',
+  path: '/catalogue',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,78 +91,134 @@ const MaisonsSlugRoute = MaisonsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/catalogue': typeof CatalogueRoute
+  '/cgv': typeof CgvRoute
   '/configurateur': typeof ConfigurateurRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/maisons': typeof MaisonsRouteWithChildren
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/realisations': typeof RealisationsRoute
+  '/rgpd': typeof RgpdRoute
   '/savoir-faire': typeof SavoirFaireRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/maisons/$slug': typeof MaisonsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/catalogue': typeof CatalogueRoute
+  '/cgv': typeof CgvRoute
   '/configurateur': typeof ConfigurateurRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/maisons': typeof MaisonsRouteWithChildren
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/realisations': typeof RealisationsRoute
+  '/rgpd': typeof RgpdRoute
   '/savoir-faire': typeof SavoirFaireRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/maisons/$slug': typeof MaisonsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/catalogue': typeof CatalogueRoute
+  '/cgv': typeof CgvRoute
   '/configurateur': typeof ConfigurateurRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/maisons': typeof MaisonsRouteWithChildren
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/realisations': typeof RealisationsRoute
+  '/rgpd': typeof RgpdRoute
   '/savoir-faire': typeof SavoirFaireRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/maisons/$slug': typeof MaisonsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/catalogue'
+    | '/cgv'
     | '/configurateur'
     | '/contact'
+    | '/cookies'
     | '/maisons'
+    | '/mentions-legales'
     | '/realisations'
+    | '/rgpd'
     | '/savoir-faire'
+    | '/sitemap.xml'
     | '/maisons/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/catalogue'
+    | '/cgv'
     | '/configurateur'
     | '/contact'
+    | '/cookies'
     | '/maisons'
+    | '/mentions-legales'
     | '/realisations'
+    | '/rgpd'
     | '/savoir-faire'
+    | '/sitemap.xml'
     | '/maisons/$slug'
   id:
     | '__root__'
     | '/'
+    | '/catalogue'
+    | '/cgv'
     | '/configurateur'
     | '/contact'
+    | '/cookies'
     | '/maisons'
+    | '/mentions-legales'
     | '/realisations'
+    | '/rgpd'
     | '/savoir-faire'
+    | '/sitemap.xml'
     | '/maisons/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CatalogueRoute: typeof CatalogueRoute
+  CgvRoute: typeof CgvRoute
   ConfigurateurRoute: typeof ConfigurateurRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   MaisonsRoute: typeof MaisonsRouteWithChildren
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
   RealisationsRoute: typeof RealisationsRoute
+  RgpdRoute: typeof RgpdRoute
   SavoirFaireRoute: typeof SavoirFaireRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/savoir-faire': {
       id: '/savoir-faire'
       path: '/savoir-faire'
       fullPath: '/savoir-faire'
       preLoaderRoute: typeof SavoirFaireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rgpd': {
+      id: '/rgpd'
+      path: '/rgpd'
+      fullPath: '/rgpd'
+      preLoaderRoute: typeof RgpdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/realisations': {
@@ -136,11 +228,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RealisationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/maisons': {
       id: '/maisons'
       path: '/maisons'
       fullPath: '/maisons'
       preLoaderRoute: typeof MaisonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -155,6 +261,20 @@ declare module '@tanstack/react-router' {
       path: '/configurateur'
       fullPath: '/configurateur'
       preLoaderRoute: typeof ConfigurateurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cgv': {
+      id: '/cgv'
+      path: '/cgv'
+      fullPath: '/cgv'
+      preLoaderRoute: typeof CgvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalogue': {
+      id: '/catalogue'
+      path: '/catalogue'
+      fullPath: '/catalogue'
+      preLoaderRoute: typeof CatalogueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -187,11 +307,17 @@ const MaisonsRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CatalogueRoute: CatalogueRoute,
+  CgvRoute: CgvRoute,
   ConfigurateurRoute: ConfigurateurRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   MaisonsRoute: MaisonsRouteWithChildren,
+  MentionsLegalesRoute: MentionsLegalesRoute,
   RealisationsRoute: RealisationsRoute,
+  RgpdRoute: RgpdRoute,
   SavoirFaireRoute: SavoirFaireRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

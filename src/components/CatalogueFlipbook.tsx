@@ -76,7 +76,7 @@ export function CatalogueFlipbook() {
     };
   }, []);
 
-  // Compute flipbook size from container + first page ratio.
+  // Compute flipbook size from container width AND viewport height + first page ratio.
   useEffect(() => {
     if (!pages.length || !containerRef.current) return;
     const first = pages[0];
@@ -86,14 +86,23 @@ export function CatalogueFlipbook() {
       if (!el) return;
       const cw = el.clientWidth;
       const isDouble = cw >= 768;
-      const pageWidth = isDouble ? Math.floor(cw / 2) : cw;
+      // Reserve vertical space for header, page title, controls bar, paddings.
+      const reserved = isDouble ? 320 : 260;
+      const availableH = Math.max(320, window.innerHeight - reserved);
+      const widthByContainer = isDouble ? Math.floor(cw / 2) : cw;
+      const widthByHeight = Math.floor(availableH / ratio);
+      const pageWidth = Math.max(240, Math.min(widthByContainer, widthByHeight));
       const pageHeight = Math.floor(pageWidth * ratio);
       setSize({ w: pageWidth, h: pageHeight });
     };
     compute();
     const ro = new ResizeObserver(compute);
     ro.observe(containerRef.current);
-    return () => ro.disconnect();
+    window.addEventListener("resize", compute);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", compute);
+    };
   }, [pages]);
 
   const prev = useCallback(() => bookRef.current?.pageFlip?.()?.flipPrev(), []);
@@ -112,7 +121,7 @@ export function CatalogueFlipbook() {
     <div className="w-full">
       <div ref={containerRef} className="mx-auto max-w-5xl">
         {status === "loading" && (
-          <div className="aspect-[1/1.414] md:aspect-[1.414/1] w-full rounded-lg bg-stone-100 ring-1 ring-charcoal/10 animate-pulse flex items-center justify-center text-charcoal/40 text-sm">
+          <div className="aspect-[1/1.414] md:aspect-[1.414/1] w-full max-h-[70vh] rounded-lg bg-stone-100 ring-1 ring-charcoal/10 animate-pulse flex items-center justify-center text-charcoal/40 text-sm">
             Chargement du catalogue…
           </div>
         )}
@@ -134,37 +143,42 @@ export function CatalogueFlipbook() {
         )}
 
         {status === "ready" && size && pages.length > 0 && (
-          <HTMLFlipBook
-            ref={bookRef}
-            width={size.w}
-            height={size.h}
-            size="stretch"
-            minWidth={280}
-            maxWidth={1400}
-            minHeight={400}
-            maxHeight={2000}
-            showCover
-            mobileScrollSupport
-            usePortrait
-            drawShadow
-            flippingTime={700}
-            maxShadowOpacity={0.4}
-            className="catalogue-flipbook mx-auto"
-            style={{}}
-            startPage={0}
-            startZIndex={0}
-            autoSize
-            clickEventForward
-            useMouseEvents
-            swipeDistance={30}
-            showPageCorners
-            disableFlipByClick={false}
-            onFlip={(e: { data: number }) => setCurrent(e.data)}
+          <div
+            className="mx-auto"
+            style={{ maxWidth: size.w * (size.w * 2 <= (containerRef.current?.clientWidth ?? 0) ? 2 : 1) }}
           >
-            {pages.map((p, i) => (
-              <Page key={i} src={p.src} number={i + 1} total={pages.length} />
-            ))}
-          </HTMLFlipBook>
+            <HTMLFlipBook
+              ref={bookRef}
+              width={size.w}
+              height={size.h}
+              size="stretch"
+              minWidth={280}
+              maxWidth={1400}
+              minHeight={400}
+              maxHeight={2000}
+              showCover
+              mobileScrollSupport
+              usePortrait
+              drawShadow
+              flippingTime={700}
+              maxShadowOpacity={0.4}
+              className="catalogue-flipbook mx-auto"
+              style={{}}
+              startPage={0}
+              startZIndex={0}
+              autoSize
+              clickEventForward
+              useMouseEvents
+              swipeDistance={30}
+              showPageCorners
+              disableFlipByClick={false}
+              onFlip={(e: { data: number }) => setCurrent(e.data)}
+            >
+              {pages.map((p, i) => (
+                <Page key={i} src={p.src} number={i + 1} total={pages.length} />
+              ))}
+            </HTMLFlipBook>
+          </div>
         )}
       </div>
 

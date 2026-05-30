@@ -36,7 +36,7 @@ type ConfigStore = ConfigState & {
   toQueryString: () => string;
 };
 
-const initial = (slug = "sequoia"): ConfigState => {
+const initial = (slug = "traditionnelle"): ConfigState => {
   const m = getModel(slug) ?? MODELS[0];
   return {
     modelSlug: m.slug,

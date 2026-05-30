@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -59,14 +60,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Dorf SIA — Maisons ossature bois sur-mesure" },
+      { title: "Envibois — Maisons ossature bois sur-mesure" },
       {
         name: "description",
         content:
           "Constructeur de maisons modernes en ossature bois. Conception sur-mesure, configurateur en ligne et devis personnalisé.",
       },
-      { name: "author", content: "Dorf SIA" },
-      { property: "og:site_name", content: "Dorf SIA" },
+      { name: "author", content: "Envibois" },
+      { property: "og:site_name", content: "Envibois" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -85,8 +86,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Dorf SIA",
-          url: "https://www.dorf.fr",
+          name: "Envibois",
+          url: "https://www.envibois.fr",
           description: "Constructeur de maisons ossature bois en France.",
         }),
       },
@@ -112,13 +113,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isHome = pathname === "/";
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <HeadContent />
         <div className="min-h-screen flex flex-col bg-cream text-charcoal font-sans selection:bg-oak/20">
           <Header />
-          <main className="flex-1"><Outlet /></main>
+          <main className={`flex-1 ${isHome ? "" : "pt-20"}`}><Outlet /></main>
           <Footer />
           <Toaster />
         </div>
