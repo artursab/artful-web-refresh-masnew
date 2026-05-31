@@ -22,7 +22,11 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact & demande de devis — Envibois" },
-      { name: "description", content: "Contactez Envibois pour un devis personnalisé. Étude gratuite, réponse sous 48h. Équipe France, Lettonie et outre-mer." },
+      {
+        name: "description",
+        content:
+          "Contactez Envibois pour un devis personnalisé. Étude gratuite, réponse sous 48h. Équipe France, Lettonie et outre-mer.",
+      },
       { property: "og:title", content: "Contact — Envibois" },
       { property: "og:description", content: "Étude gratuite, sans engagement, réponse sous 48h." },
       { property: "og:url", content: "/contact" },
@@ -33,13 +37,45 @@ export const Route = createFileRoute("/contact")({
 });
 
 const TEAM = [
-  { name: "Julien Dicharry", role: "Direction", phone: "+33 6 32 76 30 74", tel: "+33632763074", area: "Landes & Pyrénées-Atlantiques" },
-  { name: "Gérard Bruneau", role: "Commercial", phone: "+33 6 12 15 43 37", tel: "+33612154337", area: "Landes & Pyrénées-Atlantiques" },
-  { name: "Fred Mobetie", role: "Outre-mer", phone: "+590 690 062 555", tel: "+590690062555", area: "Caraïbes & DOM-TOM" },
+  {
+    name: "Julien Dicharry",
+    role: "Direction",
+    phone: "+33 6 32 76 30 74",
+    tel: "+33632763074",
+    area: "Landes & Pyrénées-Atlantiques",
+  },
+  {
+    name: "Gérard Bruneau",
+    role: "Commercial",
+    phone: "+33 6 12 15 43 37",
+    tel: "+33612154337",
+    area: "Landes & Pyrénées-Atlantiques",
+  },
+  {
+    name: "Fred Mobetie",
+    role: "Outre-mer",
+    phone: "+590 690 062 555",
+    tel: "+590690062555",
+    area: "Caraïbes & DOM-TOM",
+  },
 ];
 
-const BUDGETS_FR = ["Moins de 80 000 €", "80 000 – 150 000 €", "150 000 – 250 000 €", "250 000 – 400 000 €", "Plus de 400 000 €", "À définir"];
-const BUDGETS_EN = ["Under €80,000", "€80,000 – 150,000", "€150,000 – 250,000", "€250,000 – 400,000", "Over €400,000", "To be defined"];
+const BUDGETS_FR = [
+  "Moins de 80 000 €",
+  "80 000 – 150 000 €",
+  "150 000 – 250 000 €",
+  "250 000 – 400 000 €",
+  "Plus de 400 000 €",
+  "À définir",
+];
+const BUDGETS_EN = [
+  "Under €80,000",
+  "€80,000 – 150,000",
+  "€150,000 – 250,000",
+  "€250,000 – 400,000",
+  "Over €400,000",
+  "To be defined",
+];
 
 function Contact() {
   const { locale } = useT();
@@ -59,6 +95,9 @@ function Contact() {
     message: "",
   });
 
+  const [result, setResult] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
   // Pre-fill from configurator handoff
   useEffect(() => {
     setForm((f) => ({
@@ -68,33 +107,83 @@ function Contact() {
       options: search.config ? decodeURIComponent(search.config) : f.options,
       message:
         search.estimate && !f.message
-          ? (isFr
-              ? `Estimation issue du configurateur : ${formatPrice(search.estimate, "fr")}.\n\n`
-              : `Estimate from the configurator: ${formatPrice(search.estimate, "en")}.\n\n`)
+          ? isFr
+            ? `Estimation issue du configurateur : ${formatPrice(search.estimate, "fr")}.\n\n`
+            : `Estimate from the configurator: ${formatPrice(search.estimate, "en")}.\n\n`
           : f.message,
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setIsSending(true);
+    setResult("");
+
     const modelName = MODELS.find((m) => m.slug === form.model)?.name ?? form.model ?? "—";
-    const subject = `Demande de devis — ${form.name || (isFr ? "site web" : "website")}`;
-    const lines = [
-      `Nom: ${form.name}`,
-      `Email: ${form.email}`,
-      `Téléphone: ${form.phone}`,
-      `Localisation du projet: ${form.location}`,
-      `Modèle sélectionné: ${modelName}`,
-      `Surface souhaitée: ${form.surface} m²`,
-      `Options / configuration: ${form.options}`,
-      `Budget: ${form.budget}`,
-      `Horizon: ${form.timeline}`,
-      ``,
-      `Message:`,
-      form.message,
-    ].join("\n");
-    window.location.href = `mailto:info@envibois.fr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
+
+    const formData = new FormData();
+
+    formData.append("access_key", "764560e6-9564-4cfa-828b-73f62e866595");
+
+    formData.append("subject", `Demande de devis — ${form.name || "site web"}`);
+    formData.append("from_name", "Envibois Website");
+
+    formData.append("Nom", form.name);
+    formData.append("Email", form.email);
+    formData.append("Téléphone", form.phone);
+    formData.append("Localisation du projet", form.location);
+    formData.append("Modèle sélectionné", modelName);
+    formData.append("Surface souhaitée", form.surface ? `${form.surface} m²` : "—");
+    formData.append("Options / configuration", form.options);
+    formData.append("Budget", form.budget);
+    formData.append("Horizon", form.timeline);
+    formData.append("Message", form.message);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult(
+          isFr
+            ? "Merci. Votre demande a bien été envoyée."
+            : "Thank you. Your request has been sent successfully.",
+        );
+
+        setForm({
+          name: "",
+          email: "",
+          phone: "",
+          location: "",
+          model: "",
+          options: "",
+          surface: "",
+          budget: "",
+          timeline: "",
+          message: "",
+        });
+      } else {
+        setResult(
+          isFr
+            ? "Une erreur est survenue. Veuillez réessayer."
+            : "Something went wrong. Please try again.",
+        );
+      }
+    } catch (error) {
+      setResult(
+        isFr
+          ? "Une erreur est survenue. Veuillez réessayer."
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const field =
@@ -122,14 +211,36 @@ function Contact() {
         {/* Form */}
         <form onSubmit={onSubmit} className="lg:col-span-7 space-y-8">
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
-            <input required placeholder={isFr ? "Nom complet *" : "Full name *"} value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })} className={field} maxLength={100} />
-            <input required type="email" placeholder="Email *" value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })} className={field} maxLength={150} />
-            <input placeholder={isFr ? "Téléphone" : "Phone"} value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })} className={field} maxLength={30} />
             <input
-              placeholder={isFr ? "Localisation du projet (ville, CP, pays)" : "Project location (city, ZIP, country)"}
+              required
+              placeholder={isFr ? "Nom complet *" : "Full name *"}
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className={field}
+              maxLength={100}
+            />
+            <input
+              required
+              type="email"
+              placeholder="Email *"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className={field}
+              maxLength={150}
+            />
+            <input
+              placeholder={isFr ? "Téléphone" : "Phone"}
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              className={field}
+              maxLength={30}
+            />
+            <input
+              placeholder={
+                isFr
+                  ? "Localisation du projet (ville, CP, pays)"
+                  : "Project location (city, ZIP, country)"
+              }
               value={form.location}
               onChange={(e) => setForm({ ...form, location: e.target.value })}
               className={field}
@@ -143,9 +254,13 @@ function Contact() {
             >
               <option value="">{isFr ? "Modèle sélectionné" : "Selected model"}</option>
               {MODELS.map((m) => (
-                <option key={m.slug} value={m.slug}>{m.name}</option>
+                <option key={m.slug} value={m.slug}>
+                  {m.name}
+                </option>
               ))}
-              <option value="custom">{isFr ? "Sur-mesure / je ne sais pas encore" : "Custom / not sure yet"}</option>
+              <option value="custom">
+                {isFr ? "Sur-mesure / je ne sais pas encore" : "Custom / not sure yet"}
+              </option>
             </select>
 
             <input
@@ -163,7 +278,9 @@ function Contact() {
             >
               <option value="">{isFr ? "Fourchette de budget" : "Budget range"}</option>
               {(isFr ? BUDGETS_FR : BUDGETS_EN).map((b) => (
-                <option key={b} value={b}>{b}</option>
+                <option key={b} value={b}>
+                  {b}
+                </option>
               ))}
             </select>
 
@@ -182,18 +299,29 @@ function Contact() {
 
           <textarea
             rows={3}
-            placeholder={isFr ? "Options / configuration (bardage, toiture, finitions…)" : "Options / configuration (cladding, roof, finishes…)"}
+            placeholder={
+              isFr
+                ? "Options / configuration (bardage, toiture, finitions…)"
+                : "Options / configuration (cladding, roof, finishes…)"
+            }
             value={form.options}
             onChange={(e) => setForm({ ...form, options: e.target.value })}
             className={`${field} resize-none`}
             maxLength={1000}
           />
 
-          <textarea rows={6}
-            placeholder={isFr ? "Décrivez votre projet (terrain, style, contraintes…)" : "Describe your project (land, style, constraints…)"}
+          <textarea
+            rows={6}
+            placeholder={
+              isFr
+                ? "Décrivez votre projet (terrain, style, contraintes…)"
+                : "Describe your project (land, style, constraints…)"
+            }
             value={form.message}
             onChange={(e) => setForm({ ...form, message: e.target.value })}
-            className={`${field} resize-none`} maxLength={2000} />
+            className={`${field} resize-none`}
+            maxLength={2000}
+          />
 
           <PriceDisclaimer />
 
@@ -203,10 +331,24 @@ function Contact() {
                 ? "Vos données sont utilisées uniquement pour traiter votre demande. Voir notre politique RGPD."
                 : "Your data is used solely to handle your request. See our GDPR policy."}
             </p>
-            <button type="submit" className="bg-charcoal text-bone px-8 py-4 text-[11px] font-medium uppercase tracking-[0.22em] hover:bg-ink transition-colors">
-              {isFr ? "Envoyer ma demande" : "Send my request"}
+            <button
+              type="submit"
+              disabled={isSending}
+              className="bg-charcoal text-bone px-8 py-4 text-[11px] font-medium uppercase tracking-[0.22em] hover:bg-ink transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSending
+                ? isFr
+                  ? "Envoi..."
+                  : "Sending..."
+                : isFr
+                  ? "Envoyer ma demande"
+                  : "Send my request"}
             </button>
           </div>
+
+          {result && (
+            <p className="text-sm text-charcoal/70 border border-charcoal/10 p-4">{result}</p>
+          )}
         </form>
 
         {/* Contact info */}
@@ -214,23 +356,53 @@ function Contact() {
           <p className="eyebrow mb-6">— {isFr ? "Coordonnées" : "Get in touch"}</p>
           <dl className="space-y-8">
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">Email</dt>
-              <dd className="font-serif text-2xl italic"><a href="mailto:info@envibois.fr" className="hover:text-gold transition-colors">info@envibois.fr</a></dd>
-            </div>
-            <div>
-              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">{isFr ? "Téléphone" : "Phone"}</dt>
-              <dd className="space-y-1.5 text-lg">
-                <div><a href="tel:+33632763074" className="hover:text-gold">+33 6 32 76 30 74</a> <span className="text-charcoal/40 text-sm">FR</span></div>
-                <div><a href="tel:+37126895717" className="hover:text-gold">+371 26 89 57 17</a> <span className="text-charcoal/40 text-sm">LV</span></div>
+              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">
+                Email
+              </dt>
+              <dd className="font-serif text-2xl italic">
+                <a href="mailto:info@envibois.fr" className="hover:text-gold transition-colors">
+                  info@envibois.fr
+                </a>
               </dd>
             </div>
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">{isFr ? "Atelier" : "Workshop"}</dt>
-              <dd className="text-base text-charcoal/75 leading-relaxed">Envibois<br />Višķu iela 15A<br />LV-5410 Daugavpils, Latvia</dd>
+              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">
+                {isFr ? "Téléphone" : "Phone"}
+              </dt>
+              <dd className="space-y-1.5 text-lg">
+                <div>
+                  <a href="tel:+33632763074" className="hover:text-gold">
+                    +33 6 32 76 30 74
+                  </a>{" "}
+                  <span className="text-charcoal/40 text-sm">FR</span>
+                </div>
+                <div>
+                  <a href="tel:+37126895717" className="hover:text-gold">
+                    +371 26 89 57 17
+                  </a>{" "}
+                  <span className="text-charcoal/40 text-sm">LV</span>
+                </div>
+              </dd>
             </div>
             <div>
-              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">{isFr ? "Horaires" : "Hours"}</dt>
-              <dd className="text-base text-charcoal/75">{isFr ? "Lundi — Vendredi · 9h — 18h" : "Mon — Fri · 9am — 6pm"}</dd>
+              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">
+                {isFr ? "Atelier" : "Workshop"}
+              </dt>
+              <dd className="text-base text-charcoal/75 leading-relaxed">
+                Envibois
+                <br />
+                Višķu iela 15A
+                <br />
+                LV-5410 Daugavpils, Latvia
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">
+                {isFr ? "Horaires" : "Hours"}
+              </dt>
+              <dd className="text-base text-charcoal/75">
+                {isFr ? "Lundi — Vendredi · 9h — 18h" : "Mon — Fri · 9am — 6pm"}
+              </dd>
             </div>
           </dl>
         </aside>
@@ -244,11 +416,19 @@ function Contact() {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {TEAM.map((p) => (
-            <div key={p.name} className="border border-charcoal/10 p-8 md:p-10 hover:border-gold transition-colors">
+            <div
+              key={p.name}
+              className="border border-charcoal/10 p-8 md:p-10 hover:border-gold transition-colors"
+            >
               <span className="text-[10px] uppercase tracking-[0.22em] text-gold">{p.role}</span>
               <h3 className="font-serif text-2xl italic mt-3 mb-2 text-charcoal">{p.name}</h3>
               <p className="text-sm text-charcoal/60 mb-6">{p.area}</p>
-              <a href={`tel:${p.tel}`} className="text-charcoal font-medium border-b border-charcoal/20 pb-1 hover:border-gold">{p.phone}</a>
+              <a
+                href={`tel:${p.tel}`}
+                className="text-charcoal font-medium border-b border-charcoal/20 pb-1 hover:border-gold"
+              >
+                {p.phone}
+              </a>
             </div>
           ))}
         </div>

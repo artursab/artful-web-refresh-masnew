@@ -264,13 +264,6 @@ function Configurator() {
               </span>
             </Link>
 
-            <button
-              onClick={() => setQuoteOpen(true)}
-              className="mt-3 w-full border border-charcoal/15 text-charcoal/70 py-2 rounded-full text-xs font-medium hover:border-charcoal/40 hover:text-charcoal transition-colors"
-            >
-              {locale === "fr" ? "Envoi rapide par email" : "Quick email send"}
-            </button>
-
             <div className="mt-5">
               <PriceDisclaimer variant="compact" />
             </div>
