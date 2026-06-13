@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useT } from "@/lib/i18n";
+import logo from "@/assets/LOGO_ENVIBOIS_2.png";
 
 export function Footer() {
   const { t, locale } = useT();
@@ -43,7 +44,10 @@ export function Footer() {
       <footer className="bg-ink text-bone/70 border-t border-bone/10 py-20">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-12">
           <div className="md:col-span-4 max-w-[34ch]">
-            <span className="font-serif text-3xl block italic text-bone mb-4">Envibois</span>
+            <Link to="/" className="inline-flex mb-4">
+              <img src={logo} alt="Envibois logo" className="h-14 w-auto" />
+            </Link>
+
             <p className="text-sm text-bone/55 leading-relaxed">{t("footer.tagline")}</p>
           </div>
 
@@ -52,11 +56,23 @@ export function Footer() {
               {t("footer.nav")}
             </span>
             <ul className="text-sm space-y-2.5">
-              <li><Link to="/catalogue" className="hover:text-gold transition-colors">{locale === "fr" ? "Catalogue" : "Catalogue"}</Link></li>
-              <li><Link to="/configurateur" className="hover:text-gold transition-colors">{t("nav.configurator")}</Link></li>
-              <li><Link to="/savoir-faire" className="hover:text-gold transition-colors">{t("nav.savoir")}</Link></li>
-              <li><Link to="/realisations" className="hover:text-gold transition-colors">{t("nav.projects")}</Link></li>
-              <li><Link to="/contact" className="hover:text-gold transition-colors">{t("nav.contact")}</Link></li>
+              <li>
+                <Link to="/catalogue" className="hover:text-gold transition-colors">
+                  {locale === "fr" ? "Catalogue" : "Catalogue"}
+                </Link>
+              </li>
+              {/* <li><Link to="/configurateur" className="hover:text-gold transition-colors">{t("nav.configurator")}</Link></li> */}
+              {/* <li><Link to="/savoir-faire" className="hover:text-gold transition-colors">{t("nav.savoir")}</Link></li> */}
+              <li>
+                <Link to="/realisations" className="hover:text-gold transition-colors">
+                  {t("nav.projects")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-gold transition-colors">
+                  {t("nav.contact")}
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -65,9 +81,23 @@ export function Footer() {
               {t("footer.contact")}
             </span>
             <ul className="text-sm space-y-2 text-bone/75">
-              <li><a href="mailto:info@envibois.fr" className="hover:text-gold transition-colors">info@envibois.fr</a></li>
-              <li><a href="tel:+33632763074" className="hover:text-gold transition-colors">+33 6 32 76 30 74</a> <span className="text-bone/35">(FR)</span></li>
-              <li><a href="tel:+37126895717" className="hover:text-gold transition-colors">+371 26 89 57 17</a> <span className="text-bone/35">(LV)</span></li>
+              <li>
+                <a href="mailto:info@envibois.fr" className="hover:text-gold transition-colors">
+                  info@envibois.fr
+                </a>
+              </li>
+              <li>
+                <a href="tel:+33632763074" className="hover:text-gold transition-colors">
+                  +33 6 32 76 30 74
+                </a>{" "}
+                <span className="text-bone/35">(FR)</span>
+              </li>
+              <li>
+                <a href="tel:+37126895717" className="hover:text-gold transition-colors">
+                  +371 26 89 57 17
+                </a>{" "}
+                <span className="text-bone/35">(LV)</span>
+              </li>
             </ul>
           </div>
 
@@ -76,7 +106,13 @@ export function Footer() {
               {locale === "fr" ? "Siège" : "Office"}
             </span>
             <p className="text-sm text-bone/65 leading-relaxed">
-              Envibois<br />Višķu iela 15A<br />LV-5410 Daugavpils<br />Latvia
+              Envibois
+              <br />
+              Višķu iela 15A
+              <br />
+              LV-5410 Daugavpils
+              <br />
+              Latvia
             </p>
           </div>
         </div>
@@ -84,10 +120,18 @@ export function Footer() {
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 pt-12 mt-12 border-t border-bone/10 text-xs text-bone/45 flex flex-wrap gap-x-6 gap-y-2 items-center">
           <span>© {new Date().getFullYear()} Envibois — Reg. LV 415 030 38 694</span>
           <span className="grow" />
-          <Link to="/mentions-legales" className="hover:text-gold">{locale === "fr" ? "Mentions légales" : "Legal notice"}</Link>
-          <Link to="/cgv" className="hover:text-gold">CGV</Link>
-          <Link to="/rgpd" className="hover:text-gold">RGPD</Link>
-          <Link to="/cookies" className="hover:text-gold">Cookies</Link>
+          <Link to="/mentions-legales" className="hover:text-gold">
+            {locale === "fr" ? "Mentions légales" : "Legal notice"}
+          </Link>
+          <Link to="/cgv" className="hover:text-gold">
+            CGV
+          </Link>
+          <Link to="/rgpd" className="hover:text-gold">
+            RGPD
+          </Link>
+          <Link to="/cookies" className="hover:text-gold">
+            Cookies
+          </Link>
         </div>
       </footer>
     </>

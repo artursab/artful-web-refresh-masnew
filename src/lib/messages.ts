@@ -8,9 +8,9 @@ const fr = {
   "nav.configurator": "Configurateur",
 
   "home.eyebrow": "Constructeur de maisons ossature bois — depuis 1994",
-  "home.title": "L'art de vivre en symbiose.",
+  "home.title": "L'art de vivre au naturel.",
   "home.lead":
-    "Maisons en ossature bois sur-mesure. Conçues pour durer des générations.",
+    "Maisons en ossature bois sur-mesure. Durables et eco responsables.",
   "home.cta.models": "Découvrir les modèles",
   "home.cta.configure": "Lancer le configurateur",
 
@@ -44,7 +44,7 @@ const fr = {
 
   "savoir.title": "Notre savoir-faire",
   "savoir.lead":
-    "Trente ans d'expérience au service d'une architecture en bois exigeante, performante et durable.",
+    "20 ans d'expérience au service d'une architecture en bois exigeante, performante et durable.",
   "savoir.s1.t": "01 — Conception",
   "savoir.s1.d": "Étude personnalisée avec architecte intégré, dessin technique et plans 3D.",
   "savoir.s2.t": "02 — Atelier",
@@ -112,12 +112,12 @@ const fr = {
 const en: Record<keyof typeof fr, string> = {
   "nav.models": "Models",
   "nav.savoir": "Craftsmanship",
-  "nav.projects": "Projects",
+  "nav.projects": "Realisations",
   "nav.contact": "Contact",
   "nav.configurator": "Configurator",
 
   "home.eyebrow": "Timber-frame house builder — since 1994",
-  "home.title": "The art of living in harmony.",
+  "home.title": "The art of living naturally.",
   "home.lead":
     "Custom timber-frame homes. Built to outlive generations.",
   "home.cta.models": "Explore models",
@@ -153,7 +153,7 @@ const en: Record<keyof typeof fr, string> = {
 
   "savoir.title": "Our craftsmanship",
   "savoir.lead":
-    "Thirty years of experience serving demanding, high-performance, durable timber architecture.",
+    "Twenty years of experience serving demanding, high-performance, durable timber architecture.",
   "savoir.s1.t": "01 — Design",
   "savoir.s1.d": "Personalised study with in-house architect, technical drawings and 3D plans.",
   "savoir.s2.t": "02 — Workshop",

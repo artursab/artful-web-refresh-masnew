@@ -17,7 +17,10 @@ export const Route = createFileRoute("/catalogue")({
           "Découvrez les 6 gammes Envibois et feuilletez le catalogue : modèles, finitions, prix indicatifs et savoir-faire de l'atelier.",
       },
       { property: "og:title", content: "Catalogue & modèles — Envibois" },
-      { property: "og:description", content: "Six gammes de maisons ossature bois et catalogue interactif." },
+      {
+        property: "og:description",
+        content: "Six gammes de maisons ossature bois et catalogue interactif.",
+      },
       { property: "og:url", content: "/catalogue" },
     ],
     links: [{ rel: "canonical", href: "/catalogue" }],
@@ -43,12 +46,12 @@ function Catalogue() {
               : "From the traditional chalet to contemporary cubic architecture, every Envibois range is designed to fit a site, a climate and a lifestyle."}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              to="/configurateur"
-              className="inline-flex items-center gap-3 bg-charcoal text-bone px-6 py-3 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-ink transition-colors"
-            >
-              {isFr ? "Lancer le configurateur" : "Open the configurator"} <ArrowRight size={14} />
-            </Link>
+            {/*<Link*/}
+            {/*  to="/configurateur"*/}
+            {/*  className="inline-flex items-center gap-3 bg-charcoal text-bone px-6 py-3 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-ink transition-colors"*/}
+            {/*>*/}
+            {/*  {isFr ? "Lancer le configurateur" : "Open the configurator"} <ArrowRight size={14} />*/}
+            {/*</Link>*/}
             <a
               href="/catalogue.pdf"
               download
@@ -59,6 +62,26 @@ function Catalogue() {
             </a>
           </div>
         </header>
+
+        {/* FLIPBOOK */}
+        <section>
+          <div className="mb-10">
+            <p className="eyebrow mb-4">— {isFr ? "Édition complète" : "Complete edition"}</p>
+            <h2 className="font-serif text-3xl md:text-5xl italic text-charcoal">
+              {isFr ? "Feuilletez le catalogue." : "Browse the catalogue."}
+            </h2>
+          </div>
+
+          <div className="mx-auto w-full lg:max-w-6xl xl:max-w-7xl 2xl:max-w-[1500px]">
+            <Suspense
+              fallback={
+                <div className="mx-auto w-full aspect-[1/1.414] md:aspect-[1.414/1] bg-secondary animate-pulse" />
+              }
+            >
+              <CatalogueFlipbook />
+            </Suspense>
+          </div>
+        </section>
 
         {/* GAMMES GRID */}
         <section className="mb-24 md:mb-32">
@@ -97,29 +120,17 @@ function Catalogue() {
                 </div>
                 <p className="text-charcoal/65 leading-relaxed text-sm mb-4">{m.tagline[locale]}</p>
                 <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-charcoal/50 pt-4 border-t border-charcoal/10">
-                  <span>{t("models.from")} <span className="text-charcoal font-medium">{formatPrice(m.basePrice, locale)}</span></span>
+                  <span>
+                    {t("models.from")}{" "}
+                    <span className="text-charcoal font-medium">
+                      {formatPrice(m.basePrice, locale)}
+                    </span>
+                  </span>
                   <span>{m.baseSurface} m²</span>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
-
-        {/* FLIPBOOK */}
-        <section>
-          <div className="mb-10">
-            <p className="eyebrow mb-4">— {isFr ? "Édition complète" : "Complete edition"}</p>
-            <h2 className="font-serif text-3xl md:text-5xl italic text-charcoal">
-              {isFr ? "Feuilletez le catalogue." : "Browse the catalogue."}
-            </h2>
-          </div>
-          <Suspense
-            fallback={
-              <div className="mx-auto max-w-5xl aspect-[1/1.414] md:aspect-[1.414/1] w-full bg-secondary animate-pulse" />
-            }
-          >
-            <CatalogueFlipbook />
-          </Suspense>
         </section>
       </div>
     </div>

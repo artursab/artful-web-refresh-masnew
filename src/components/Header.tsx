@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import logo from "@/assets/LOGO_ENVIBOIS_2.png";
 
 export function Header() {
   const { t, locale, setLocale } = useT();
@@ -20,8 +21,8 @@ export function Header() {
 
   const links = [
     { to: "/catalogue", label: locale === "fr" ? "Catalogue" : "Catalogue" },
-    { to: "/configurateur", label: t("nav.configurator") },
-    { to: "/savoir-faire", label: t("nav.savoir") },
+    /*{ to: "/configurateur", label: t("nav.configurator") },
+    { to: "/savoir-faire", label: t("nav.savoir") },*/
     { to: "/realisations", label: t("nav.projects") },
     { to: "/contact", label: t("nav.contact") },
   ] as const;
@@ -39,8 +40,12 @@ export function Header() {
   return (
     <nav className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${base}`}>
       <div className="max-w-screen-2xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
-        <Link to="/" className="font-serif text-2xl tracking-tight italic">
-          Envibois
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="Envibois logo"
+            className="h-12 w-auto"
+          />
         </Link>
 
         <div className="hidden md:flex gap-10 text-[11px] font-medium uppercase tracking-[0.18em]">

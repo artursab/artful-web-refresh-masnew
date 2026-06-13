@@ -19,68 +19,141 @@ export function CommercialProcess({
 
   const steps = isFr
     ? [
-        { t: "Choisir un modèle", d: "Vous sélectionnez un modèle de maison ou configurez la vôtre via notre configurateur en ligne." },
-        { t: "Formulaire de projet", d: "Vous remplissez le formulaire avec les informations clés : terrain, surface, options, budget." },
-        { t: "Étude préliminaire gratuite", d: "Notre équipe prépare une première estimation chiffrée, sans engagement de votre part." },
-        { t: "Échanges & compléments", d: "Nous revenons vers vous pour préciser les détails manquants : sol, accès, contraintes locales." },
-        { t: "Offre finale détaillée", d: "Vous recevez une évaluation complète : descriptif technique, planning, prix ferme." },
-        { t: "Lancement des travaux", d: "Les travaux démarrent uniquement après confirmation de l'offre et réception de l'acompte." },
+        {
+          t: "Choisir une ligne architecturale",
+          d: "Vous consultez nos catalogues en ligne pour choisir le style extérieur et l’ambiance intérieure de votre future maison.",
+        },
+        {
+          t: "Formulaire de projet",
+          d: "Vous remplissez le formulaire avec les informations clés : terrain, surface souhaitée, besoins, budget et avancement du projet.",
+        },
+        {
+          t: "Étude préliminaire gratuite",
+          d: "Notre équipe prépare une première estimation chiffrée, sans engagement de votre part.",
+        },
+        {
+          t: "Échanges & compléments",
+          d: "Nous revenons vers vous pour préciser les détails manquants : accès, sol, contraintes locales, plans ou documents disponibles.",
+        },
+        {
+          t: "Offre finale détaillée",
+          d: "Vous recevez une évaluation complète : descriptif technique, planning prévisionnel et prix détaillé.",
+        },
+        {
+          t: "Lancement des travaux",
+          d: "Les travaux démarrent uniquement après confirmation de l’offre et réception de l’acompte.",
+        },
       ]
     : [
-        { t: "Pick a model", d: "Select a house model or configure your own using our online configurator." },
-        { t: "Project form", d: "Fill in the form with the key information: land, surface, options, budget." },
-        { t: "Free preliminary study", d: "Our team prepares a first costed estimate, with no commitment on your side." },
-        { t: "Exchanges & details", d: "We come back to you to clarify missing details: soil, access, local constraints." },
-        { t: "Final detailed offer", d: "You receive a complete evaluation: technical scope, schedule, firm price." },
-        { t: "Work begins", d: "Work starts only after offer confirmation and reception of the deposit." },
+        {
+          t: "Choose an architectural direction",
+          d: "Browse our online catalogues to choose the exterior style and interior atmosphere of your future home.",
+        },
+        {
+          t: "Project form",
+          d: "Fill in the form with the key information: land, desired surface, needs, budget and project progress.",
+        },
+        {
+          t: "Free preliminary study",
+          d: "Our team prepares a first costed estimate, with no commitment on your side.",
+        },
+        {
+          t: "Exchanges & details",
+          d: "We come back to you to clarify missing details: access, soil, local constraints, plans or available documents.",
+        },
+        {
+          t: "Final detailed offer",
+          d: "You receive a complete evaluation: technical description, provisional schedule and detailed price.",
+        },
+        {
+          t: "Work begins",
+          d: "Work starts only after confirmation of the offer and reception of the deposit.",
+        },
       ];
 
   const isCompact = variant === "compact";
 
   return (
     <section className={isCompact ? "py-12" : "py-24 md:py-32 bg-bone"}>
-      <div className={`mx-auto px-6 md:px-10 ${isCompact ? "max-w-screen-xl" : "max-w-screen-2xl"}`}>
-        <header className={`max-w-3xl ${isCompact ? "mb-10" : "mb-16 md:mb-20"}`}>
-          <p className="eyebrow mb-5">— {isFr ? "Comment ça marche" : "How it works"}</p>
-          <h2
-            className={`font-serif italic text-charcoal leading-[1.05] ${
-              isCompact ? "text-3xl md:text-4xl" : "text-4xl md:text-6xl"
-            }`}
-          >
-            {isFr ? "Notre processus, étape par étape." : "Our process, step by step."}
-          </h2>
-          {!isCompact && (
-            <p className="mt-6 text-lg text-charcoal/65 leading-relaxed max-w-2xl">
+      <div
+        className={`mx-auto px-6 md:px-10 ${isCompact ? "max-w-screen-xl" : "max-w-screen-2xl"}`}
+      >
+        {!isCompact && (
+          <header className="max-w-4xl mb-16 md:mb-20">
+            <p className="eyebrow mb-5">
+              —{" "}
               {isFr
-                ? "De la première idée à la pose de la dernière planche : un parcours transparent, sans surprise."
-                : "From the first idea to the last plank: a transparent journey, no surprises."}
+                ? "Projets personnalisés : Une offre à la carte"
+                : "Customised projects: a bespoke service"}
             </p>
-          )}
-        </header>
 
-        <ol
-          className={`grid gap-px bg-charcoal/10 border border-charcoal/10 ${
-            isCompact ? "md:grid-cols-3 sm:grid-cols-2" : "md:grid-cols-3 sm:grid-cols-2"
-          }`}
-        >
-          {steps.map((s, i) => (
-            <li
-              key={i}
-              className="bg-bone p-6 md:p-8 group hover:bg-charcoal/[0.02] transition-colors"
+            <h2 className="font-serif italic text-charcoal leading-[1.05] text-4xl md:text-6xl">
+              {isFr
+                ? "Si vous disposez d’un dossier de permis de construire réalisé par un architecte :"
+                : "If you already have a building permit file prepared by an architect:"}
+            </h2>
+
+            <p className="mt-6 text-lg text-charcoal/65 leading-relaxed max-w-3xl">
+              {isFr
+                ? "Nous vous proposons un devis gratuit pour la fabrication et le montage de votre ossature bois hors d’eau / hors d’air, hors travaux de fondation. Ce devis correspond à l’étape 3 du processus."
+                : "We offer a free quotation for the manufacture and assembly of your timber frame structure, watertight and airtight, excluding foundation work. This quotation corresponds to step 3 of the process."}
+            </p>
+
+            <h2 className="font-serif italic text-charcoal leading-[1.05] text-4xl md:text-5xl mt-14">
+              {isFr
+                ? "Vous êtes dans une phase de première approche projet:"
+                : "You are in the first approach phase of your project:"}
+            </h2>
+          </header>
+        )}
+
+        <div className="grid md:grid-cols-12 gap-12 items-start">
+          <div className="md:col-span-9">
+            <header className={`max-w-3xl ${isCompact ? "mb-10" : "mb-12"}`}>
+              <h2
+                className={`font-serif italic text-charcoal leading-[1.05] ${
+                  isCompact ? "text-2xl md:text-3xl" : "text-2xl md:text-5xl"
+                }`}
+              >
+                {isFr ? "Notre processus, étape par étape." : "Our process, step by step."}
+              </h2>
+
+              {!isCompact && (
+                <p className="mt-6 text-lg text-charcoal/65 leading-relaxed max-w-2xl">
+                  {isFr
+                    ? "De l’idée initiale au clos-couvert : une démarche transparente et sans surprises."
+                    : "From the initial idea to the watertight and airtight stage: a transparent process with no surprises."}
+                </p>
+              )}
+            </header>
+
+            <ol
+              className={`grid gap-px bg-charcoal/10 border border-charcoal/10 ${
+                isCompact ? "md:grid-cols-3 sm:grid-cols-2" : "md:grid-cols-3 sm:grid-cols-2"
+              }`}
             >
-              <div className="flex items-baseline gap-4 mb-4">
-                <span className="font-serif italic text-3xl md:text-4xl text-gold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="h-px flex-1 bg-charcoal/15" />
-              </div>
-              <h3 className="font-serif text-xl md:text-2xl italic text-charcoal mb-3 leading-tight">
-                {s.t}
-              </h3>
-              <p className="text-sm text-charcoal/65 leading-relaxed">{s.d}</p>
-            </li>
-          ))}
-        </ol>
+              {steps.map((s, i) => (
+                <li
+                  key={i}
+                  className="bg-bone p-6 md:p-8 group hover:bg-charcoal/[0.02] transition-colors"
+                >
+                  <div className="flex items-baseline gap-4 mb-4">
+                    <span className="font-serif italic text-3xl md:text-4xl text-gold">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="h-px flex-1 bg-charcoal/15" />
+                  </div>
+
+                  <h3 className="font-serif text-xl md:text-2xl italic text-charcoal mb-3 leading-tight">
+                    {s.t}
+                  </h3>
+
+                  <p className="text-sm text-charcoal/65 leading-relaxed">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
 
         {showDisclaimer && (
           <div className={isCompact ? "mt-8" : "mt-12"}>
@@ -96,11 +169,12 @@ export function CommercialProcess({
             >
               {isFr ? "Démarrer mon projet" : "Start my project"} <ArrowUpRight size={14} />
             </Link>
+
             <Link
-              to="/configurateur"
+              to="/maisons"
               className="inline-flex items-center gap-3 border border-charcoal/30 text-charcoal px-8 py-4 text-[11px] font-medium uppercase tracking-[0.22em] hover:border-gold hover:text-gold transition-colors"
             >
-              {isFr ? "Configurer ma maison" : "Configure my home"}
+              {isFr ? "Voir les catalogues" : "View catalogues"}
             </Link>
           </div>
         )}

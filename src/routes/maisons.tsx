@@ -44,17 +44,17 @@ function Models() {
           <CatalogueFlipbook />
         </Suspense>
 
-        <div className="mt-14 md:mt-20 flex justify-center">
-          <Link
-            to="/configurateur"
-            className="inline-flex items-center gap-3 bg-charcoal text-cream pl-6 pr-3 py-3 rounded-full text-sm font-medium hover:bg-moss transition-colors"
-          >
-            Configurer un projet similaire
-            <span className="size-7 flex items-center justify-center bg-cream/15 rounded-full">
-              <ArrowUpRight size={14} />
-            </span>
-          </Link>
-        </div>
+        {/*<div className="mt-14 md:mt-20 flex justify-center">*/}
+        {/*  <Link*/}
+        {/*    to="/configurateur"*/}
+        {/*    className="inline-flex items-center gap-3 bg-charcoal text-cream pl-6 pr-3 py-3 rounded-full text-sm font-medium hover:bg-moss transition-colors"*/}
+        {/*  >*/}
+        {/*    Configurer un projet similaire*/}
+        {/*    <span className="size-7 flex items-center justify-center bg-cream/15 rounded-full">*/}
+        {/*      <ArrowUpRight size={14} />*/}
+        {/*    </span>*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
       </div>
     </div>
   );

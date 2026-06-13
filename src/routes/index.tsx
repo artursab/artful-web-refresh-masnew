@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import heroImg from "@/assets/home/hero.jpg";
-import storyImg from "@/assets/home/story.jpg";
+import storyImg1 from "@/assets/story1.png";
+import storyImg2 from "@/assets/story2.png";
 import bandForest from "@/assets/home/band-craft.jpg";
 import neoWood from "@/assets/home/gamme-neo-wood.jpg";
 import bandInterior from "@/assets/home/band-daylight.jpg";
@@ -14,6 +15,7 @@ import { useT } from "@/lib/i18n";
 import { CommercialProcess } from "@/components/CommercialProcess";
 import { ProjectsCarousel } from "@/components/ProjectsCarousel";
 import { MODELS } from "@/lib/models";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,7 +26,7 @@ export const Route = createFileRoute("/")({
         content:
           "Concepteur et constructeur de maisons modernes en ossature bois. Atlantica de précision, savoir-faire artisanal, livraison clés en main.",
       },
-      { property: "og:title", content: "Envibois — L'art de vivre en symbiose" },
+      { property: "og:title", content: "Envibois — L'art de vivre AU NATUREL" },
       {
         property: "og:description",
         content: "Maisons en ossature bois haute performance, conçues et construites pour durer.",
@@ -40,6 +42,17 @@ export const Route = createFileRoute("/")({
 function Home() {
   const { t, locale } = useT();
   const isFr = locale === "fr";
+
+  const storyImages = [storyImg1, storyImg2];
+  const [storyIndex, setStoryIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStoryIndex((prev) => (prev + 1) % storyImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
@@ -58,7 +71,7 @@ function Home() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="font-serif italic text-5xl md:text-7xl lg:text-8xl leading-[1.05]"
           >
-            {isFr ? "L'art de vivre en symbiose." : "The art of living in harmony."}
+            {isFr ? "L'art de vivre AU NATUREL." : "The art of living naturally."}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -67,8 +80,8 @@ function Home() {
             className="mt-8 max-w-2xl text-base md:text-lg text-bone/90 leading-relaxed"
           >
             {isFr
-              ? "Maisons en ossature bois sur-mesure. Conçues pour durer des générations."
-              : "Custom timber-frame homes. Designed to outlive generations."}
+              ? "Maisons en ossature bois sur-mesure. Durables et eco responsables."
+              : "Custom timber-frame homes. Sustainable and environmentally friendly."}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -83,10 +96,10 @@ function Home() {
               {isFr ? "Découvrir les modèles" : "Discover the models"}
             </Link>
             <Link
-              to="/configurateur"
+              to="/contact"
               className="px-8 py-4 border border-bone/60 text-bone text-[11px] font-medium uppercase tracking-[0.22em] hover:bg-bone hover:text-ink transition-colors"
             >
-              {isFr ? "Lancer le configurateur" : "Open the configurator"}
+              {isFr ? "Contactez-nous" : "Contact Us"}
             </Link>
           </motion.div>
         </div>
@@ -103,14 +116,16 @@ function Home() {
       <section className="border-y border-charcoal/10 py-10">
         <div className="max-w-screen-2xl mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { n: "180+", l: isFr ? "maisons livrées" : "homes raised" },
-            { n: "30 ans", l: isFr ? "d'expérience" : "of experience" },
+            { n: "100+", l: isFr ? "maisons livrées" : "homes raised" },
+            { n: "20", l: isFr ? "ans d'expérience" : "years of experience" },
             { n: "100%", l: isFr ? "bois certifié" : "certified timber" },
             { n: "RE2020", l: isFr ? "conforme" : "compliant" },
           ].map((s) => (
             <div key={s.l}>
               <p className="font-serif text-3xl md:text-4xl italic text-charcoal">{s.n}</p>
-              <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-charcoal/50 mt-2">{s.l}</p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-charcoal/50 mt-2">
+                {s.l}
+              </p>
             </div>
           ))}
         </div>
@@ -119,32 +134,37 @@ function Home() {
       {/* STORY */}
       <section id="about" className="py-28 md:py-40">
         <div className="mx-auto max-w-screen-2xl px-6 md:px-10 grid md:grid-cols-12 gap-12 items-center">
-          <div className="md:col-span-5 overflow-hidden">
-            <img
-              src={storyImg}
-              alt={isFr ? "Atelier de charpente" : "Carpentry workshop"}
-              loading="lazy"
-              className="w-full h-[620px] object-cover"
-            />
+          <div className="md:col-span-5 overflow-hidden relative h-[620px]">
+            {storyImages.map((img, index) => (
+              <img
+                key={img}
+                src={img}
+                alt={isFr ? "Atelier de charpente" : "Carpentry workshop"}
+                loading="lazy"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  index === storyIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
           </div>
           <div className="md:col-span-6 md:col-start-7">
             <p className="eyebrow mb-6">— {isFr ? "Notre histoire" : "Our story"}</p>
             <h2 className="font-serif text-4xl md:text-6xl italic text-charcoal leading-[1.05]">
               {isFr
-                ? "Un atelier, une forêt, et l'obsession discrète du bois."
-                : "A workshop, a forest, and a quiet obsession with wood."}
+                ? "La Nature, la foret, et l’idée d’un habitat sein et harmonieux."
+                : "Nature, the forest, and the idea of a healthy and harmonious home."}
             </h2>
             <p className="mt-8 text-lg leading-relaxed text-charcoal/70 max-w-xl">
               {isFr
-                ? "Depuis plus de trente ans, Envibois dessine, usine et élève des maisons en bois à travers l'Europe. Chaque poutre est sourcée, chaque assemblage vérifié à la main. Nous ne construisons pas vite — nous construisons pour durer."
-                : "For more than three decades, Envibois has been drawing, milling and raising wooden homes across Europe. Every beam is sourced, every joint hand-checked. We don't build fast — we build to outlive us."}
+                ? "C’est en arpentant les Pays Baltes dans les années 2000 que notre fondateur découvrit l’habitat traditionnel en Bois Nordique:\nFait de bois et de paille, chauffé au bois par un poelle de masse: un confort exceptionnel et chauffé avec si peu…\nDe cet engoument naissant suivi une période de formation aux metiers et techniques, puis la sélection des produits, des savoirs faires et l’élaboration d’un systéme constructif alliant des matériaux biosourcés, performants et durables en conformité avec les normes locales des différentes régions de destination.\nAujourd’hui, nous sommes fiers d’avoir réalisé plus de 100 constructions dans des regions aussi différentes que la Scandinavie et les caraibes mais aussi: en Allemagne, au benelux, et dans toute la France métropolitaine."
+                : "It was whilst travelling through the Baltic States in the 2000s that our founder discovered traditional Nordic timber housing: Built from timber and straw, heated by a wood-burning masonry stove: exceptional comfort achieved with so little… This budding enthusiasm was followed by a period of training in the trades and techniques, then the selection of products and expertise, and the development of a construction system combining bio-based, high-performance and sustainable materials in compliance with local standards in the various regions of destination. Today, we are proud to have completed over 100 projects in regions as diverse as Scandinavia and the Caribbean, as well as in Germany, the Benelux countries, and throughout mainland France."}
             </p>
-            <Link
+            {/*<Link
               to="/savoir-faire"
               className="inline-flex items-center gap-3 mt-10 text-[11px] font-medium uppercase tracking-[0.22em] text-charcoal border-b border-charcoal/30 pb-1 hover:border-gold hover:text-gold transition-colors"
             >
               {isFr ? "Découvrir notre savoir-faire" : "Discover our craftsmanship"} <ArrowUpRight size={14} />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>
@@ -205,7 +225,9 @@ function Home() {
                       className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="font-serif text-3xl mb-3 italic text-charcoal group-hover:text-gold transition-colors">{m.name}</h3>
+                  <h3 className="font-serif text-3xl mb-3 italic text-charcoal group-hover:text-gold transition-colors">
+                    {m.name}
+                  </h3>
                   <p className="text-charcoal/65 leading-relaxed">{m.tagline[locale]}</p>
                 </Link>
               );
@@ -219,7 +241,9 @@ function Home() {
         <div className="mx-auto max-w-screen-2xl px-6 md:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
             <div>
-              <p className="eyebrow mb-4">— {isFr ? "Projets sélectionnés" : "Selected projects"}</p>
+              <p className="eyebrow mb-4">
+                — {isFr ? "Projets sélectionnés" : "Selected projects"}
+              </p>
               <h2 className="font-serif text-4xl md:text-6xl italic text-charcoal leading-[1.05]">
                 {isFr ? "Récemment achevés." : "Recently completed."}
               </h2>
@@ -232,7 +256,6 @@ function Home() {
             </Link>
           </div>
           <ProjectsCarousel />
-
         </div>
       </section>
 
